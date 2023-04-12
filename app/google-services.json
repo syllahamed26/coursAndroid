@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "838091688046",
+    "project_id": "app-compose-4fbd1",
+    "storage_bucket": "app-compose-4fbd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838091688046:android:0d2c0ebe6e0a2c41aabe7f",
+        "android_client_info": {
+          "package_name": "com.mvince.compose"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "838091688046-j7e3o0stjmlv5fi5veqf8pc2i9jmh37r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRntiWRCYVFOjp8errCIxByYvXhvyc0Bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "838091688046-j7e3o0stjmlv5fi5veqf8pc2i9jmh37r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

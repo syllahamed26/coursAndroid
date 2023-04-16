@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mvince.compose.ui.details.DetailsScreen
+import com.mvince.compose.ui.signin.SignInScreen
 import com.mvince.compose.ui.signup.SignUpScreen
 import com.mvince.compose.ui.users.UsersScreen
 
@@ -16,8 +17,11 @@ fun ComposeApp() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Route.SIGN_UP
+        startDestination = Route.SIGN_IN
     ) {
+        composable(Route.SIGN_IN) { backStackEntry ->
+            SignInScreen(navController = navController)
+        }
         composable(Route.SIGN_UP) { backStackEntry ->
             SignUpScreen(navController = navController)
         }
@@ -38,6 +42,7 @@ object Route {
     const val USER = "user"
     const val DETAIL = "detail"
     const val SIGN_UP = "signup"
+    const val SIGN_IN = "signin"
 }
 
 object Argument {

@@ -1,10 +1,21 @@
 package com.mvince.compose.ui.signin
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
@@ -20,10 +31,24 @@ fun SignInScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
+    var displayPassword by remember { mutableStateOf(false) }
+
     val authResource = viewModel.signInFlow.collectAsState()
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        TextField(
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Text(
+            text = stringResource(id = R.string.signin),
+            style = MaterialTheme.typography.headlineLarge
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        OutlinedTextField(
             value = email,
             onValueChange = {
                 email = it
@@ -36,10 +61,12 @@ fun SignInScreen(navController: NavController) {
                 autoCorrect = false,
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
-            )
+            ),
         )
 
-        TextField(
+        Spacer(modifier = Modifier.height(10.dp))
+
+        OutlinedTextField(
             value = password,
             onValueChange = {
                 password = it
@@ -53,8 +80,26 @@ fun SignInScreen(navController: NavController) {
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             ),
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = if (displayPassword) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                AnimatedVisibility(
+                    visible = password.isNotEmpty(),
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
+                    IconButton(onClick = { displayPassword = !displayPassword }) {
+                        Image(
+                            painter = painterResource(
+                            id = if (displayPassword) R.drawable.ic_visibility_off else R.drawable.ic_visibility_on
+                        ),
+                        contentDescription = "VisiblePassword"
+                    )
+                    }
+                }
+            },
         )
+
+        Spacer(modifier = Modifier.height(10.dp))
 
         Button(
             onClick = {
@@ -68,5 +113,15 @@ fun SignInScreen(navController: NavController) {
                 style = MaterialTheme.typography.titleMedium
             )
         }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text(
+            text = stringResource(id = R.string.signup),
+            modifier = Modifier.clickable {
+                navController.navigate("signup")
+            },
+            style = MaterialTheme.typography.titleMedium
+        )
     }
 }

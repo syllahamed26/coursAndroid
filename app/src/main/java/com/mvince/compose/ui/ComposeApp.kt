@@ -19,10 +19,10 @@ fun ComposeApp() {
         navController = navController,
         startDestination = Route.SIGN_IN
     ) {
-        composable(Route.SIGN_IN) { backStackEntry ->
+        composable(Route.SIGN_IN) {
             SignInScreen(navController = navController)
         }
-        composable(Route.SIGN_UP) { backStackEntry ->
+        composable(Route.SIGN_UP) {
             SignUpScreen(navController = navController)
         }
         composable(

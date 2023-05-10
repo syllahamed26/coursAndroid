@@ -12,7 +12,7 @@ class AuthRepository @Inject constructor(private val firebaseAuth: FirebaseAuth)
 
     suspend fun login(email: String, password: String): FirebaseUser? {
         return try {
-            val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            val result = firebaseAuth.signInWithEmailAndPassword(email.trim(), password).await()
             result.user
         } catch (e: Exception) {
             e.printStackTrace()
@@ -22,7 +22,7 @@ class AuthRepository @Inject constructor(private val firebaseAuth: FirebaseAuth)
 
     suspend fun signup(email: String, password: String): FirebaseUser? {
         return try {
-            val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            val result = firebaseAuth.createUserWithEmailAndPassword(email.trim(), password).await()
             result.user
         } catch (e: Exception) {
             e.printStackTrace()

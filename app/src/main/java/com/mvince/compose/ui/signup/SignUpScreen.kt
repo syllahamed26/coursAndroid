@@ -29,7 +29,7 @@ fun SignUpScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    val authResource = viewModel.signupFlow.collectAsState()
+    val authResource = viewModel.isAuthenticate.collectAsState()
 
     Column(
         modifier = Modifier.fillMaxSize(),

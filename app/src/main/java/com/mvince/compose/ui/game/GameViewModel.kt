@@ -1,6 +1,5 @@
 package com.mvince.compose.ui.game
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mvince.compose.network.model.Result
@@ -28,6 +27,10 @@ class GameViewModel @Inject constructor(
     val currentScore: StateFlow<Int>
         get() = _currentScore
 
+    private val _falseAnswer = MutableStateFlow<Boolean>(false)
+    val falseAnswer: StateFlow<Boolean>
+        get() = _falseAnswer
+
     private val _questions = flow {
         val questions = questionRepository.getQuestions()
         emit(questions)
@@ -38,6 +41,7 @@ class GameViewModel @Inject constructor(
 
     var currentIndex: Int = 0;
     var currentAnswer: String? = null;
+    var finalScreen: Boolean = false;
 
     val questions: StateFlow<List<Result>>
         get() = _questions
@@ -57,11 +61,20 @@ class GameViewModel @Inject constructor(
             _currentScore.update {
                 it + points
             }
+            _falseAnswer.update {
+                points == 0
+            }
         }
+
+        //delay to show color change
+        //Thread.sleep(2000)
 
         //If last question, go to result screen
         if(index == _questions.value.size - 1) {
             Timber.tag("GameViewModel").d("Score: " + _currentScore.value)
+
+            //Set variable to be used to change screen to FinalScoreScreen
+            finalScreen = true;
             return
         }
 

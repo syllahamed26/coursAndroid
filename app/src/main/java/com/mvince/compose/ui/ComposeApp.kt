@@ -20,7 +20,7 @@ fun ComposeApp() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Route.GAME
+        startDestination = Route.FINAL_SCORE
     ) {
         composable(Route.SIGN_IN) {
             SignInScreen(navController = navController)
@@ -35,7 +35,7 @@ fun ComposeApp() {
             GameScreen(navController = navController)
         }
         composable(Route.FINAL_SCORE) {
-            FinalScoreScreen()
+            FinalScoreScreen(navController = navController)
         }
         composable(
             route = "${Route.DETAIL}/{${Argument.USERNAME}}",

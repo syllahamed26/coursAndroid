@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mvince.compose.R
+import com.mvince.compose.ui.Route
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -106,6 +107,9 @@ fun SignInScreen(navController: NavController) {
                 println("email: $email")
                 println("password: $password")
                 viewModel.signIn(email, password)
+                if (authResource.value) {
+                    navController.navigate(Route.GAME)
+                }
             },
         ) {
             Text(

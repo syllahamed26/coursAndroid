@@ -9,6 +9,7 @@ import com.mvince.compose.repository.UserFirebaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,8 +25,10 @@ class SignInViewModel @Inject constructor(
     fun signIn(email: String, password: String) {
         viewModelScope.launch {
             val uid = repository.login(email, password)?.uid
-            if (uid != null){
-                _signInFlow.value = firebaseRepository.insertUser(uid, UserFirebase(email))
+            if (uid != null) {
+                _signInFlow.update {
+                    true
+                }
             }
         }
     }

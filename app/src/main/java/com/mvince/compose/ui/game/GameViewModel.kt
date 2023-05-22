@@ -2,8 +2,11 @@ package com.mvince.compose.ui.game
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mvince.compose.domain.ScoreFirebase
 import com.mvince.compose.network.model.Result
+import com.mvince.compose.repository.AuthRepository
 import com.mvince.compose.repository.QuestionRepository
+import com.mvince.compose.repository.ScoreFirebaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -11,12 +14,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import timber.log.Timber
+import java.time.LocalDateTime
+import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
 class GameViewModel @Inject constructor(
-    private val questionRepository: QuestionRepository
+    private val questionRepository: QuestionRepository,
+    private val scoreRepository: ScoreFirebaseRepository,
+    private val authRepository: AuthRepository
     ): ViewModel() {
 
     private val _currentQuestion = MutableStateFlow<Result?>(null)
@@ -66,12 +72,13 @@ class GameViewModel @Inject constructor(
             }
         }
 
-        //delay to show color change
-        //Thread.sleep(2000)
-
         //If last question, go to result screen
         if(index == _questions.value.size - 1) {
-            Timber.tag("GameViewModel").d("Score: " + _currentScore.value)
+
+            //Save score to firebase
+            if(authRepository.currentUser != null){
+                scoreRepository.insertScore(ScoreFirebase(_currentScore.value, authRepository.currentUser!!.uid))
+            }
 
             //Set variable to be used to change screen to FinalScoreScreen
             finalScreen = true;

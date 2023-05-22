@@ -46,6 +46,11 @@ fun GameScreen(navController: NavController){
 //
             if (currentQuestion != null) {
                 Text(
+                    text = "Question ${currentIndex + 1} / ${questions.size}",
+                    modifier = Modifier.padding(25.dp),
+                    style = MaterialTheme.typography.titleMedium
+                );
+                Text(
                     text = currentQuestion.question,
                     modifier = Modifier.padding(25.dp),
                     style = MaterialTheme.typography.titleLarge
@@ -82,6 +87,11 @@ fun GameScreen(navController: NavController){
                     }
                 }
             }
+            Text(
+                text = "Score: ${viewModel.currentScore.value}",
+                modifier = Modifier.padding(25.dp),
+                style = MaterialTheme.typography.titleMedium
+            )
         }
     }
 }

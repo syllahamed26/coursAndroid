@@ -34,7 +34,13 @@ fun SignInScreen(navController: NavController) {
 
     var displayPassword by remember { mutableStateOf(false) }
 
-    val authResource = viewModel.signInFlow.collectAsState()
+    val authResource = viewModel.signInFlow.collectAsState().value
+
+    LaunchedEffect(key1 = authResource, block = {
+        if(authResource){
+            navController.navigate(Route.HOME)
+        }
+    })
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -107,9 +113,6 @@ fun SignInScreen(navController: NavController) {
                 println("email: $email")
                 println("password: $password")
                 viewModel.signIn(email, password)
-                if (authResource.value) {
-                    navController.navigate(Route.GAME)
-                }
             },
         ) {
             Text(

@@ -45,15 +45,25 @@ class GameViewModel @Inject constructor(
         }
     }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    var currentAnswer: String? = null;
-    var finalScreen: Boolean = false;
+    private val _currentAnswer: MutableStateFlow<String> = MutableStateFlow("")
+    val currentAnswer: StateFlow<String>
+        get() = _currentAnswer
 
-    val questions: StateFlow<List<Result>>
+    fun setCurrentAnswer(answer: String){
+        _currentAnswer.value = answer
+    }
+
+    private val _finalScreen = MutableStateFlow<Boolean>(false)
+    val finalScreen: StateFlow<Boolean>
+        get() = _finalScreen
+
+
+    val questions: StateFlow<List<Any>>
         get() = _questions
 
     fun validateAnswers(index: Int){
         //Manage score
-        if(currentAnswer == currentQuestion.value?.correctAnswer){
+        if(currentAnswer.value == currentQuestion.value?.correctAnswer){
             var points = 0;
             points = currentQuestion.value?.difficulty?.let {
                 when(it){
@@ -77,8 +87,7 @@ class GameViewModel @Inject constructor(
             }
 
             //Set variable to be used to change screen to FinalScoreScreen
-            finalScreen = true;
-            return
+            _finalScreen.update { true }
         }
 
         //Change question

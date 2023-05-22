@@ -18,6 +18,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,8 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mvince.compose.ui.Route
+import com.mvince.compose.ui.home.BottomRoute
 
-@SuppressLint("StateFlowValueCalledInComposition")
+@SuppressLint("StateFlowValueCalledInComposition", "SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameScreen(navController: NavController){
@@ -37,10 +39,17 @@ fun GameScreen(navController: NavController){
     val questions =  viewModel.questions.collectAsState().value
     val currentQuestion = viewModel.currentQuestion.collectAsState().value
     val currentIndex = viewModel.currentIndex.collectAsState().value;
+    val currentScore = viewModel.currentScore.collectAsState().value
+    val finalQuestion = viewModel.finalScreen.collectAsState().value
 
-    Scaffold() {
+    LaunchedEffect(key1 = finalQuestion, block = {
+        if(finalQuestion){
+            navController.navigate(BottomRoute.FINAL_SCORE)
+        }
+    })
+
         Column(
-            modifier = Modifier.padding(it),
+            //modifier = Modifier.padding(it),
             verticalArrangement = Arrangement.Center
         ) {
 //
@@ -63,13 +72,8 @@ fun GameScreen(navController: NavController){
                     ) {
                         Button(
                             onClick = {
-                                viewModel.currentAnswer = answer
-
-                                //send answer to viewmodel
+                                viewModel.setCurrentAnswer(answer)
                                 viewModel.validateAnswers(currentIndex)
-                                if (viewModel.finalScreen) {
-                                    navController.navigate(Route.FINAL_SCORE)
-                                }
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -84,10 +88,9 @@ fun GameScreen(navController: NavController){
                 }
             }
             Text(
-                text = "Score: ${viewModel.currentScore.value}",
+                text = "Score: $currentScore",
                 modifier = Modifier.padding(25.dp),
                 style = MaterialTheme.typography.titleMedium
             )
         }
     }
-}

@@ -25,10 +25,10 @@ class SignInViewModel @Inject constructor(
     fun signIn(email: String, password: String) {
         viewModelScope.launch {
             val uid = repository.login(email, password)?.uid
-            if (uid != null) {
-                _signInFlow.update {
-                    true
-                }
+            if(uid.isNullOrEmpty()){
+                _signInFlow.update { false }
+            }else{
+                _signInFlow.update { true }
             }
         }
     }

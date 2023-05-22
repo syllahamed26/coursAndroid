@@ -12,23 +12,24 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.mvince.compose.R
 import com.mvince.compose.ui.Route
+import com.mvince.compose.ui.home.BottomRoute
 
 @Composable
 fun NavigationBar(navController: NavController) {
     val bottomNavItems = listOf(
         NavigationBarContent(
             name = "Home",
-            route = Route.HOME,
+            route = BottomRoute.HOME,
             icon = painterResource(id = R.drawable.ic_home),
         ),
         NavigationBarContent(
             name = "Game",
-            route = Route.GAME,
+            route = BottomRoute.GAME,
             icon = painterResource(id = R.drawable.ic_game),
         ),
         NavigationBarContent(
             name = "Login",
-            route = Route.SIGN_IN,
+            route = BottomRoute.FINAL_SCORE,
             icon = painterResource(id = R.drawable.ic_login),
         ),
     )

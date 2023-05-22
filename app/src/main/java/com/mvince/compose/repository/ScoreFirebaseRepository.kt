@@ -22,12 +22,12 @@ class ScoreFirebaseRepository @Inject constructor(private val firestore: Firebas
         }
     }
 
-    fun getByUser(userUid: String): Flow<List<ScoreFirebase>> {
-        val data = firestore.collection(_collection)
+    fun getLastScoreByUser(userUid: String): Flow<List<ScoreFirebase>> {
+        return firestore.collection(_collection)
             .whereEqualTo("user", userUid)
+            .orderBy("date", Query.Direction.DESCENDING)
+            .limit(1)
             .snapshots().map { it.toObjects<ScoreFirebase>() }
-        println(data)
-        return data
     }
 
     companion object {

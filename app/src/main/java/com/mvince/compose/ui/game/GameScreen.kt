@@ -36,7 +36,7 @@ fun GameScreen(navController: NavController){
 
     val questions =  viewModel.questions.collectAsState().value
     val currentQuestion = viewModel.currentQuestion.collectAsState().value
-    val currentIndex = viewModel.currentIndex;
+    val currentIndex = viewModel.currentIndex.collectAsState().value;
 
     Scaffold() {
         Column(
@@ -74,13 +74,9 @@ fun GameScreen(navController: NavController){
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(5.dp),
-//                            colors = ButtonDefaults.buttonColors(
-//                                containerColor = if (viewModel.falseAnswer.value) Color.Red else Color.Blue
-//                            )
                         ) {
                             Text(
                                 text = answer,
-                                //modifier = Modifier.padding(25.dp),
                                 style = MaterialTheme.typography.titleMedium
                             )
                         }

@@ -28,7 +28,7 @@ class FinalScoreViewModel @Inject constructor(
         get() = _currentScore
 
     private val _scores = flow {
-        val scores = scoreFirebaseRepository.getByUser(authRepository.currentUser?.uid ?: "")
+        val scores = scoreFirebaseRepository.getLastScoreByUser(authRepository.currentUser?.uid ?: "")
         emit(scores)
         _currentScore.update {
             scores.first()[0].score
@@ -38,5 +38,4 @@ class FinalScoreViewModel @Inject constructor(
 
     val scores: StateFlow<Flow<List<ScoreFirebase>>>
         get() = _scores
-
 }

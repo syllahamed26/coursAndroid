@@ -20,7 +20,7 @@ fun ComposeApp() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Route.FINAL_SCORE
+        startDestination = Route.SIGN_IN
     ) {
         composable(Route.SIGN_IN) {
             SignInScreen(navController = navController)

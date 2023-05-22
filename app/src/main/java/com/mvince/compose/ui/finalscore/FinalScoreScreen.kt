@@ -30,6 +30,8 @@ fun FinalScoreScreen(navController: NavController) {
 
     val currentScore = viewModel.currentScore.collectAsState()
 
+    val scores = viewModel.scores.collectAsState().value
+
     Scaffold {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -43,8 +45,5 @@ fun FinalScoreScreen(navController: NavController) {
                 Text(text = "Retour à l'accueil")
             }
         }
-//        Divider(
-//            modifier = Modifier.padding(25.dp)
-//        )
     }
 }

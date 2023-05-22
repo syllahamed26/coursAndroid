@@ -33,9 +33,9 @@ class GameViewModel @Inject constructor(
     val currentScore: StateFlow<Int>
         get() = _currentScore
 
-    private val _falseAnswer = MutableStateFlow<Boolean>(false)
-    val falseAnswer: StateFlow<Boolean>
-        get() = _falseAnswer
+    private val _currentIndex = MutableStateFlow<Int>(0)
+    val currentIndex : StateFlow<Int>
+        get() = _currentIndex
 
     private val _questions = flow {
         val questions = questionRepository.getQuestions()
@@ -45,7 +45,6 @@ class GameViewModel @Inject constructor(
         }
     }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    var currentIndex: Int = 0;
     var currentAnswer: String? = null;
     var finalScreen: Boolean = false;
 
@@ -67,9 +66,6 @@ class GameViewModel @Inject constructor(
             _currentScore.update {
                 it + points
             }
-            _falseAnswer.update {
-                points == 0
-            }
         }
 
         //If last question, go to result screen
@@ -87,8 +83,8 @@ class GameViewModel @Inject constructor(
 
         //Change question
         _currentQuestion.update {
-            currentIndex = index + 1
-            _questions.value.get(currentIndex)
+            _currentIndex.update { index + 1 }
+            _questions.value.get(_currentIndex.value)
         }
     }
 }

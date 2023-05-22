@@ -43,7 +43,7 @@ class GameViewModel @Inject constructor(
     var currentAnswer: String? = null;
     var finalScreen: Boolean = false;
 
-    val questions: StateFlow<List<Result>>
+    val questions: StateFlow<List<Any>>
         get() = _questions
 
     fun validateAnswers(index: Int){

@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mvince.compose.ui.Route
+import com.mvince.compose.ui.home.BottomRoute
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,11 +37,10 @@ fun GameScreen(navController: NavController){
 
     val questions =  viewModel.questions.collectAsState().value
     val currentQuestion = viewModel.currentQuestion.collectAsState().value
-    val currentIndex = viewModel.currentIndex;
+    //val currentIndex = viewModel.currentIndex
 
-    Scaffold() {
         Column(
-            modifier = Modifier.padding(it),
+            //modifier = Modifier.padding(it),
             verticalArrangement = Arrangement.Center
         ) {
 //
@@ -61,9 +61,9 @@ fun GameScreen(navController: NavController){
                                 viewModel.currentAnswer = answer
 
                                 //send answer to viewmodel
-                                viewModel.validateAnswers(currentIndex)
+                                //viewModel.validateAnswers(currentIndex)
                                 if (viewModel.finalScreen) {
-                                    navController.navigate(Route.FINAL_SCORE)
+                                    navController.navigate(BottomRoute.FINAL_SCORE)
                                 }
                             },
                             modifier = Modifier
@@ -84,4 +84,3 @@ fun GameScreen(navController: NavController){
             }
         }
     }
-}

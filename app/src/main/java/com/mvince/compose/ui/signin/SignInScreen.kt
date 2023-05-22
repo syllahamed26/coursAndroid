@@ -33,7 +33,13 @@ fun SignInScreen(navController: NavController) {
 
     var displayPassword by remember { mutableStateOf(false) }
 
-    val authResource = viewModel.signInFlow.collectAsState()
+    val authResource = viewModel.signInFlow.collectAsState().value
+
+    LaunchedEffect(key1 = authResource, block = {
+        if(authResource){
+            navController.navigate("home")
+        }
+    })
 
     Column(
         modifier = Modifier.fillMaxSize(),

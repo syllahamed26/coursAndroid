@@ -11,6 +11,7 @@ import com.mvince.compose.ui.details.DetailsScreen
 import com.mvince.compose.ui.finalscore.FinalScoreScreen
 import com.mvince.compose.ui.game.GameScreen
 import com.mvince.compose.ui.home.HomeScreen
+import com.mvince.compose.ui.home.MainScreen
 import com.mvince.compose.ui.signin.SignInScreen
 import com.mvince.compose.ui.signup.SignUpScreen
 import com.mvince.compose.ui.users.UsersScreen
@@ -20,7 +21,7 @@ fun ComposeApp() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Route.GAME
+        startDestination = Route.SIGN_IN
     ) {
         composable(Route.SIGN_IN) {
             SignInScreen(navController = navController)
@@ -29,23 +30,7 @@ fun ComposeApp() {
             SignUpScreen(navController = navController)
         }
         composable(Route.HOME) {
-            HomeScreen()
-        }
-        composable(Route.GAME) {
-            GameScreen(navController = navController)
-        }
-        composable(Route.FINAL_SCORE) {
-            FinalScoreScreen()
-        }
-        composable(
-            route = "${Route.DETAIL}/{${Argument.USERNAME}}",
-            arguments = listOf(
-                navArgument(Argument.USERNAME) {
-                    type = NavType.StringType
-                }
-            ),
-        ) {
-            DetailsScreen(navController)
+            MainScreen()
         }
     }
 }
@@ -55,9 +40,7 @@ object Route {
     const val DETAIL = "detail"
     const val SIGN_UP = "signup"
     const val SIGN_IN = "signin"
-    const val GAME = "game"
     const val HOME = "home"
-    const val FINAL_SCORE = "finalscore"
 }
 
 object Argument {

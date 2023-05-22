@@ -44,6 +44,7 @@ fun GameScreen(navController: NavController){
 
     LaunchedEffect(key1 = finalQuestion, block = {
         if(finalQuestion){
+            //TODO: Navigate to final score screen but not working
             navController.navigate(BottomRoute.FINAL_SCORE)
         }
     })
@@ -52,7 +53,6 @@ fun GameScreen(navController: NavController){
             //modifier = Modifier.padding(it),
             verticalArrangement = Arrangement.Center
         ) {
-//
             if (currentQuestion != null) {
                 Text(
                     text = "Question ${currentIndex + 1} / ${questions.size}",

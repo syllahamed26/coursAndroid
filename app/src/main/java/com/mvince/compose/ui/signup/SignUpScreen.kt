@@ -5,6 +5,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -35,11 +37,14 @@ fun SignUpScreen(navController: NavController) {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
+    var firstname by remember { mutableStateOf("") }
 
     val authResource = viewModel.isAuthenticate.collectAsState().value
 
     LaunchedEffect(key1 = authResource, block = {
         if (authResource.isSingUp) {
+            println("add")
             navController.navigate(Route.SIGN_IN)
         }
     })
@@ -53,7 +58,11 @@ fun SignUpScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceAround,
         ) {
-            Image(modifier = Modifier.fillMaxWidth(), painter = painterResource(id = R.drawable.ic_launcher_background), contentDescription = "")
+            Image(
+                modifier = Modifier.fillMaxWidth(),
+                painter = painterResource(id = R.drawable.ic_launcher_background),
+                contentDescription = ""
+            )
 
             Text(
                 text = stringResource(id = R.string.signup),
@@ -67,6 +76,63 @@ fun SignUpScreen(navController: NavController) {
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         errorBorderColor = Color.Red
                     ),
+                    leadingIcon = { Icon(
+                        painter = painterResource(id = R.drawable.ic_name),
+                        contentDescription = null,
+                        tint = Color.Black
+                    ) },
+                    value = name,
+                    onValueChange = {
+                        name = it
+                    },
+                    isError = !authResource.isCorrect,
+                    label = {
+                        Text(text = stringResource(id = R.string.name))
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.None,
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
+                    )
+                )
+
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        errorBorderColor = Color.Red
+                    ),
+                    leadingIcon = { Icon(
+                        painter = painterResource(id = R.drawable.ic_firstname),
+                        contentDescription = null,
+                        tint = Color.Black
+                    ) },
+                    value = firstname,
+                    onValueChange = {
+                        firstname = it
+                    },
+                    isError = !authResource.isCorrect,
+                    label = {
+                        Text(text = stringResource(id = R.string.firstname))
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.None,
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
+                    )
+                )
+
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        errorBorderColor = Color.Red
+                    ),
+                    leadingIcon = { Icon(
+                        painter = painterResource(id = R.drawable.ic_email),
+                        contentDescription = null,
+                        tint = Color.Black
+                    ) },
                     value = email,
                     onValueChange = {
                         email = it
@@ -88,6 +154,11 @@ fun SignUpScreen(navController: NavController) {
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         errorBorderColor = Color.Red
                     ),
+                    leadingIcon = { Icon(
+                        painter = painterResource(id = R.drawable.ic_password),
+                        contentDescription = null,
+                        tint = Color.Black
+                    ) },
                     value = password,
                     onValueChange = {
                         password = it
@@ -108,11 +179,14 @@ fun SignUpScreen(navController: NavController) {
             }
 
 
+
             Button(
-                modifier = Modifier.fillMaxWidth().height(45.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(45.dp),
                 shape = RoundedCornerShape(10.dp),
                 onClick = {
-                    viewModel.signup(email, password)
+                    viewModel.signup(name, firstname, email, password)
                 },
             ) {
                 Text(
@@ -123,7 +197,10 @@ fun SignUpScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.align(alignment = Alignment.CenterHorizontally)
+            ) {
                 Text(text = "Joined us before ?", color = GreyLink, fontSize = 15.sp)
                 TextButton(
                     onClick = {
@@ -135,4 +212,4 @@ fun SignUpScreen(navController: NavController) {
             }
         }
     }
-    }
+}

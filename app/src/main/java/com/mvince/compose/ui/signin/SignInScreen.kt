@@ -86,6 +86,11 @@ fun SignInScreen(navController: NavController) {
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         errorBorderColor = Color.Red
                     ),
+                    leadingIcon = { Icon(
+                        painter = painterResource(id = R.drawable.ic_email),
+                        contentDescription = null,
+                        tint = Color.Black
+                    ) },
                     value = email,
                     onValueChange = {
                         email = it
@@ -106,6 +111,11 @@ fun SignInScreen(navController: NavController) {
                     modifier = Modifier.fillMaxWidth(),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         errorBorderColor = Color.Red),
+                    leadingIcon = { Icon(
+                        painter = painterResource(id = R.drawable.ic_password),
+                        contentDescription = null,
+                        tint = Color.Black
+                    ) },
                     value = password,
                     onValueChange = {
                         password = it

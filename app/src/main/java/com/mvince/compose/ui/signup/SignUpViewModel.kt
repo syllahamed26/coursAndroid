@@ -23,11 +23,14 @@ class SignUpViewModel @Inject constructor(
     private val _isAuthenticate = MutableStateFlow(SignUpUiState())
     val isAuthenticate: StateFlow<SignUpUiState> = _isAuthenticate
 
-    fun signup(email: String, password: String) {
+    fun signup(name:String, firstname:String, email: String, password: String) {
         viewModelScope.launch {
-            val uid  = authRepository.signup(email, password)?.uid
+            val uid  = authRepository.signup(name, firstname, email, password)?.uid
             if (uid != null) {
-                _isAuthenticate.update { it.copy(isSingUp = firebaseRepository.insertUser(uid, UserFirebase(email)), isCorrect = true) }
+                println("c'est bon")
+                val insert = firebaseRepository.insertUser(uid, UserFirebase(name, firstname, email))
+                println(insert)
+                _isAuthenticate.update { it.copy(isSingUp = insert, isCorrect = true) }
             }else {
                 _isAuthenticate.update { it.copy(isSingUp = false, isCorrect = false) }
             }

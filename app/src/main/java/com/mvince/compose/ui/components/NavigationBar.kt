@@ -32,6 +32,11 @@ fun NavigationBar(navController: NavController) {
             route = BottomRoute.FINAL_SCORE,
             icon = painterResource(id = R.drawable.ic_login),
         ),
+        NavigationBarContent(
+            name = "Leaderboard",
+            route = BottomRoute.LEADERBOARD,
+            icon = painterResource(id = R.drawable.ic_leaderboard),
+        ),
     )
 
     NavigationBar() {

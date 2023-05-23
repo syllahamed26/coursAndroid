@@ -21,7 +21,7 @@ fun ComposeApp() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Route.SIGN_IN
+        startDestination = Route.HOME
     ) {
         composable(Route.SIGN_IN) {
             SignInScreen(navController = navController)

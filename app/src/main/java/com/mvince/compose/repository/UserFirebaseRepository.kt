@@ -11,7 +11,13 @@ import javax.inject.Inject
 class UserFirebaseRepository @Inject constructor(private val firestore: FirebaseFirestore) {
 
     fun insertUser(id: String, user: UserFirebase): Boolean {
-        return firestore.collection(_collection).document(id).set(user).isSuccessful
+        return try {
+            firestore.collection(_collection).document(id).set(user)
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
     }
 
     fun getAll(): Flow<List<UserFirebase>> {

@@ -2,7 +2,6 @@ package com.mvince.compose.ui.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseUser
 import com.mvince.compose.domain.UserFirebase
 import com.mvince.compose.repository.AuthRepository
 import com.mvince.compose.repository.UserFirebaseRepository
@@ -18,20 +17,21 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val firebaseRepository: UserFirebaseRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _isAuthenticate = MutableStateFlow(SignUpUiState())
     val isAuthenticate: StateFlow<SignUpUiState> = _isAuthenticate
 
-    fun signup(name:String, firstname:String, email: String, password: String) {
+    fun signup(name: String, firstname: String, email: String, password: String) {
         viewModelScope.launch {
-            val uid  = authRepository.signup(name, firstname, email, password)?.uid
+            val uid = authRepository.signup(name, firstname, email, password)?.uid
             if (uid != null) {
                 println("c'est bon")
-                val insert = firebaseRepository.insertUser(uid, UserFirebase(name, firstname, email))
+                val insert =
+                    firebaseRepository.insertUser(uid, UserFirebase(name, firstname, email))
                 println(insert)
                 _isAuthenticate.update { it.copy(isSingUp = insert, isCorrect = true) }
-            }else {
+            } else {
                 _isAuthenticate.update { it.copy(isSingUp = false, isCorrect = false) }
             }
         }

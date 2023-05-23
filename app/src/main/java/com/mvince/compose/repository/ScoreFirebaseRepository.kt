@@ -6,9 +6,7 @@ import com.google.firebase.firestore.ktx.snapshots
 import com.google.firebase.firestore.ktx.toObjects
 import com.mvince.compose.domain.ScoreFirebase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.map
-import java.util.UUID
 import javax.inject.Inject
 
 class ScoreFirebaseRepository @Inject constructor(private val firestore: FirebaseFirestore) {

@@ -88,6 +88,7 @@ class GameViewModel @Inject constructor(
 
             //Set variable to be used to change screen to FinalScoreScreen
             _finalScreen.update { true }
+            return
         }
 
         //Change question

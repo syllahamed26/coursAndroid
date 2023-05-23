@@ -12,6 +12,7 @@ import com.mvince.compose.ui.Route
 import com.mvince.compose.ui.components.NavigationBar
 import com.mvince.compose.ui.finalscore.FinalScoreScreen
 import com.mvince.compose.ui.game.GameScreen
+import com.mvince.compose.ui.leaderboard.LeaderboardScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,6 +34,9 @@ fun MainScreen(){
             composable(BottomRoute.FINAL_SCORE) {
                 FinalScoreScreen(navController = navController)
             }
+            composable(BottomRoute.LEADERBOARD) {
+                LeaderboardScreen()
+            }
         }
     }
 
@@ -42,4 +46,5 @@ object BottomRoute {
     const val GAME = "game"
     const val HOME = "home"
     const val FINAL_SCORE = "finalscore"
+    const val LEADERBOARD = "leaderboard"
 }

@@ -30,6 +30,10 @@ class ScoreFirebaseRepository @Inject constructor(private val firestore: Firebas
             .snapshots().map { it.toObjects<ScoreFirebase>() }
     }
 
+    fun getAllScore(): Flow<List<ScoreFirebase>> {
+        return firestore.collection(_collection).snapshots().map { it.toObjects<ScoreFirebase>() }
+    }
+
     companion object {
         private const val _collection: String = "SCORES"
     }

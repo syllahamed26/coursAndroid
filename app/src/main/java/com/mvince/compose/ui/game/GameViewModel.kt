@@ -37,12 +37,12 @@ class GameViewModel @Inject constructor(
     val currentIndex : StateFlow<Int>
         get() = _currentIndex
 
-    private val _questions = flow {
+    private val _questions = flow<List<Result>> {
         val questions = questionRepository.getQuestions()
-        emit(questions)
         _currentQuestion.update {
             questions.first()
         }
+        emit(questions)
     }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val _currentAnswer: MutableStateFlow<String> = MutableStateFlow("")

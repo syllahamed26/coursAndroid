@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.mvince.compose.domain.UserFirebase
 import com.mvince.compose.repository.AuthRepository
 import com.mvince.compose.repository.UserFirebaseRepository
+import com.mvince.compose.ui.users.UsersUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,16 +20,20 @@ class SignInViewModel @Inject constructor(
     private val firebaseRepository: UserFirebaseRepository
 ): ViewModel() {
 
-    private val _signInFlow = MutableStateFlow<Boolean>(false)
-    val signInFlow : StateFlow<Boolean> = _signInFlow
+    //private val _signInFlow = MutableStateFlow<SingnInUiState>(isLogin =)
+    //val signInFlow : StateFlow<Boolean> = _signInFlow
+
+    private val _signInFlow = MutableStateFlow(SingnInUiState())
+    val signInFlow: StateFlow<SingnInUiState>
+        get() = _signInFlow
 
     fun signIn(email: String, password: String) {
         viewModelScope.launch {
             val uid = repository.login(email, password)?.uid
             if(uid.isNullOrEmpty()){
-                _signInFlow.update { false }
+                _signInFlow.update { it.copy(isSingIn = false, isCorrect = false) }
             }else{
-                _signInFlow.update { true }
+                _signInFlow.update { it.copy(isSingIn = true, isCorrect = true) }
             }
         }
     }

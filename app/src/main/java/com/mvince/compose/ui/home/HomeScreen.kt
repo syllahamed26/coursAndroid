@@ -20,5 +20,5 @@ import com.mvince.compose.ui.game.GameScreen
 
 @Composable
 fun HomeScreen(){
-    Text(text = "ttktktkt")
+    Text(text = "HOME PAGE")
 }

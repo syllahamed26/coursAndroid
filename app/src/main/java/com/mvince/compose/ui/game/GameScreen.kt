@@ -51,7 +51,7 @@ fun GameScreen(navController: NavController){
                         style = MaterialTheme.typography.titleMedium
                     );
                     Text(
-                        text = currentQuestion.question,
+                        text = currentQuestion.question.toString(),
                         modifier = Modifier.padding(25.dp),
                         style = MaterialTheme.typography.titleLarge
                     )
@@ -63,7 +63,7 @@ fun GameScreen(navController: NavController){
                         ) {
                             Button(
                                 onClick = {
-                                    viewModel.setCurrentAnswer(answer)
+                                    viewModel.setCurrentAnswer(answer.toString())
                                     viewModel.validateAnswers(currentIndex)
                                 },
                                 modifier = Modifier
@@ -71,7 +71,7 @@ fun GameScreen(navController: NavController){
                                     .padding(5.dp),
                             ) {
                                 Text(
-                                    text = answer,
+                                    text = answer.toString(),
                                     style = MaterialTheme.typography.titleMedium
                                 )
                             }

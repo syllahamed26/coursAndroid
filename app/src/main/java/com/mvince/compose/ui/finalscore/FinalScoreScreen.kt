@@ -1,25 +1,25 @@
 package com.mvince.compose.ui.finalscore
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.mvince.compose.R
 import com.mvince.compose.ui.Route
+import com.mvince.compose.ui.theme.*
 
 @SuppressLint("StateFlowValueCalledInComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,17 +32,50 @@ fun FinalScoreScreen(navController: NavController) {
 
     val scores = viewModel.scores.collectAsState().value
 
-    Scaffold {
+
+    ElevatedCard(modifier = Modifier
+        .fillMaxSize()
+        .padding(horizontal = 50.dp, vertical = 200.dp), shape = RoundedCornerShape(30.dp)
+    ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 30.dp, vertical = 10.dp),
+            verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Fin de la partie")
-            Text(modifier = Modifier.padding(20.dp), text = "Votre score est de ${currentScore.value}",style = MaterialTheme.typography.titleMedium
-            )
-            Button(onClick = {navController.navigate(Route.HOME)}) {
-                Text(text = "Retour à l'accueil")
+            Text(text = "Fin de la partie", fontSize = 30.sp, fontWeight = FontWeight.Bold)
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = "Votre score : \n",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontSize = 25.sp,
+                    color = GreyLight,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = "${currentScore.value}",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontSize = 50.sp,
+                    color = Green700,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Button(
+
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(45.dp),
+                shape = RoundedCornerShape(30.dp),
+                onClick = {
+                    navController.navigate(Route.HOME)
+                },
+            ) {
+                Text(
+                    text = "Retour à l'accueil",
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
         }
     }

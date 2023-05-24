@@ -23,7 +23,7 @@ fun MainScreen(){
     Scaffold(bottomBar = { NavigationBar(navController = navController) }) {
         NavHost(
             navController = navController,
-            startDestination = BottomRoute.HOME
+            startDestination = BottomRoute.LEADERBOARD
         ) {
             composable(BottomRoute.HOME) {
                 HomeScreen()

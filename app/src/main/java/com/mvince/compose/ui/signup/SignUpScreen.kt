@@ -37,7 +37,7 @@ fun SignUpScreen(navController: NavController) {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var name by remember { mutableStateOf("") }
+    var displayName by remember { mutableStateOf("") }
     var firstname by remember { mutableStateOf("") }
 
     val authResource = viewModel.isAuthenticate.collectAsState().value
@@ -81,9 +81,9 @@ fun SignUpScreen(navController: NavController) {
                         contentDescription = null,
                         tint = Color.Black
                     ) },
-                    value = name,
+                    value = displayName,
                     onValueChange = {
-                        name = it
+                        displayName = it
                     },
                     isError = !authResource.isCorrect,
                     label = {
@@ -186,7 +186,7 @@ fun SignUpScreen(navController: NavController) {
                     .height(45.dp),
                 shape = RoundedCornerShape(10.dp),
                 onClick = {
-                    viewModel.signup(name, firstname, email, password)
+                    viewModel.signup(displayName, firstname, email, password)
                 },
             ) {
                 Text(

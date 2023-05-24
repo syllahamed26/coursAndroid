@@ -23,7 +23,7 @@ fun LeaderboardScreen() {
             verticalArrangement = Arrangement.Center
         ) {
             scores.forEachIndexed { index, score ->
-                Text(text = "${index + 1} - ${score.user} : ${score.score}")
+                Text(text = "${index + 1} - ${score.name} : ${score.score}")
             }
         }
     }

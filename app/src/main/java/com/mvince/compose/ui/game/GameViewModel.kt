@@ -83,7 +83,7 @@ class GameViewModel @Inject constructor(
 
             //Save score to firebase
             if(authRepository.currentUser != null){
-                scoreRepository.insertScore(ScoreFirebase(_currentScore.value, authRepository.currentUser!!.uid))
+                scoreRepository.insertScore(ScoreFirebase(_currentScore.value, authRepository.currentUser!!.uid, authRepository.currentUser!!.displayName))
             }
 
             //Set variable to be used to change screen to FinalScoreScreen

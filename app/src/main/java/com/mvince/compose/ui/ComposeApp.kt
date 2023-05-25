@@ -12,6 +12,7 @@ import com.mvince.compose.ui.finalscore.FinalScoreScreen
 import com.mvince.compose.ui.game.GameScreen
 import com.mvince.compose.ui.home.HomeScreen
 import com.mvince.compose.ui.home.MainScreen
+import com.mvince.compose.ui.profile.ProfileScreen
 import com.mvince.compose.ui.signin.SignInScreen
 import com.mvince.compose.ui.signup.SignUpScreen
 import com.mvince.compose.ui.users.UsersScreen

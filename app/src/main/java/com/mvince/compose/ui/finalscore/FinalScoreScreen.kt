@@ -24,7 +24,7 @@ import com.mvince.compose.ui.theme.*
 @SuppressLint("StateFlowValueCalledInComposition", "UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FinalScoreScreen(navController: NavController) {
+fun FinalScoreScreen(navController: NavController, textDisplay: String? = null) {
 
     val viewModel = hiltViewModel<FinalScoreViewModel>()
 
@@ -44,10 +44,14 @@ fun FinalScoreScreen(navController: NavController) {
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Fin de la partie", fontSize = 30.sp, fontWeight = FontWeight.Bold)
+            Text(
+                text = textDisplay ?: "End of the game",
+                fontSize = 30.sp, fontWeight = FontWeight.Bold,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "Votre score : \n",
+                    text = "Your score : \n",
                     style = MaterialTheme.typography.titleMedium,
                     fontSize = 25.sp,
                     color = GreyLight,
@@ -73,7 +77,7 @@ fun FinalScoreScreen(navController: NavController) {
                 },
             ) {
                 Text(
-                    text = "Retour à l'accueil",
+                    text = "Go to the home screen",
                     style = MaterialTheme.typography.titleMedium
                 )
             }

@@ -2,6 +2,7 @@ package com.mvince.compose.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.snapshots
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.mvince.compose.domain.UserFirebase
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +23,12 @@ class UserFirebaseRepository @Inject constructor(private val firestore: Firebase
 
     fun getAll(): Flow<List<UserFirebase>> {
         return firestore.collection(_collection).snapshots().map { it.toObjects<UserFirebase>() }
+    }
+
+    fun getUserById(id: String): Flow<UserFirebase?> {
+        return firestore.collection(_collection)
+            .document(id)
+            .snapshots().map { it.toObject<UserFirebase>() }
     }
 
     companion object {

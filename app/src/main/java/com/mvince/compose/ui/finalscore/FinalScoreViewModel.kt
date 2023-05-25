@@ -23,8 +23,8 @@ class FinalScoreViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val scoreFirebaseRepository: ScoreFirebaseRepository
 ): ViewModel(){
-    private val _currentScore = MutableStateFlow<Int>(0)
-    val currentScore: StateFlow<Int>
+    private val _currentScore = MutableStateFlow<Double>(0.0)
+    val currentScore: StateFlow<Double>
         get() = _currentScore
 
     private val _scores = flow {

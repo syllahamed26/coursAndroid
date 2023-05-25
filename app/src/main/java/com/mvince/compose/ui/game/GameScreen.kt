@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mvince.compose.ui.Route
+import com.mvince.compose.ui.finalscore.FinalScoreScreen
 import com.mvince.compose.ui.home.BottomRoute
 
 @SuppressLint("StateFlowValueCalledInComposition", "SuspiciousIndentation")
@@ -31,6 +32,7 @@ fun GameScreen(navController: NavController){
     val currentIndex = viewModel.currentIndex.collectAsState().value;
     val currentScore = viewModel.currentScore.collectAsState().value
     val finalQuestion = viewModel.finalScreen.collectAsState().value
+    val isAlreadyPLaying = viewModel.isAlreadyPlaying.collectAsState().value
 
     LaunchedEffect(key1 = finalQuestion, block = {
         if(finalQuestion){
@@ -39,61 +41,68 @@ fun GameScreen(navController: NavController){
         }
     })
         Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                //modifier = Modifier.padding(it),
-                verticalArrangement = Arrangement.Center
-            ) {
-                if (currentQuestion != null) {
+            if(!isAlreadyPLaying) {
+                Column(
+                    //modifier = Modifier.padding(it),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    if (currentQuestion != null) {
 
-                    Text(
-                        text = "Question ${currentIndex + 1} / ${questions.size}",
-                        modifier = Modifier.padding(25.dp),
-                        style = MaterialTheme.typography.titleMedium
-                    );
-                    Text(
-                        text = currentQuestion.question.toString(),
-                        modifier = Modifier.padding(25.dp),
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    val answers = currentQuestion.incorrectAnswers + currentQuestion.correctAnswer
-                    answers.shuffled().forEachIndexed { index, answer ->
-                        //Display each answer as button centered in a row
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Button(
-                                onClick = {
-                                    viewModel.setCurrentAnswer(answer.toString())
-                                    viewModel.validateAnswers(currentIndex)
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(5.dp),
+                        Text(
+                            text = "Question ${currentIndex + 1} / ${questions.size}",
+                            modifier = Modifier.padding(25.dp),
+                            style = MaterialTheme.typography.titleMedium
+                        );
+                        Text(
+                            text = currentQuestion.question.toString(),
+                            modifier = Modifier.padding(25.dp),
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        val answers =
+                            currentQuestion.incorrectAnswers + currentQuestion.correctAnswer
+                        answers.shuffled().forEachIndexed { index, answer ->
+                            //Display each answer as button centered in a row
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
                             ) {
-                                Text(
-                                    text = answer.toString(),
-                                    style = MaterialTheme.typography.titleMedium
-                                )
+                                Button(
+                                    onClick = {
+                                        viewModel.setCurrentAnswer(answer.toString())
+                                        viewModel.validateAnswers(currentIndex)
+                                    },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(5.dp),
+                                ) {
+                                    Text(
+                                        text = answer.toString(),
+                                        style = MaterialTheme.typography.titleMedium
+                                    )
+                                }
                             }
                         }
+                        Text(
+                            text = "Score: $currentScore",
+                            modifier = Modifier.padding(25.dp),
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
-                    Text(
-                        text = "Score: $currentScore",
-                        modifier = Modifier.padding(25.dp),
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                }
                 }
 
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                AnimatedVisibility(visible = questions.isEmpty() && currentScore == 0 ) {
-                    CircularProgressIndicator(modifier = Modifier.then(Modifier.size(100.dp)))
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    AnimatedVisibility(visible = questions.isEmpty() && currentScore == 0.0) {
+                        CircularProgressIndicator(modifier = Modifier.then(Modifier.size(100.dp)))
+                    }
                 }
             }
-        }
+            else {
+//                Text(text = "You already played today", modifier = Modifier.padding(25.dp), style = MaterialTheme.typography.titleMedium);
 
-    }
+                FinalScoreScreen(navController = navController, textDisplay = "You already played today")
+            }
+        }
+}

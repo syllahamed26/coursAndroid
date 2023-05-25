@@ -48,7 +48,7 @@ fun MainScreen(){
                 startDestination = BottomRoute.HOME
             ) {
                 composable(BottomRoute.HOME) {
-                    HomeScreen()
+                    HomeScreen(navController = navController)
                 }
                 composable(BottomRoute.GAME) {
                     GameScreen(navController = navController)

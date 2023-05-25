@@ -41,7 +41,7 @@ fun LeaderboardScreen() {
             ElevatedCard(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 30.dp, vertical = 20.dp),
+                    .padding(horizontal = 30.dp, vertical = 70.dp),
                 shape = RoundedCornerShape(30.dp)
             ) {
                 Column(modifier = Modifier.padding(horizontal = 40.dp, vertical = 20.dp)) {
@@ -130,7 +130,7 @@ fun LeaderboardScreen() {
                 ElevatedCard(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 30.dp, vertical = 10.dp),
+                        .padding(horizontal = 30.dp, vertical = 0.dp),
                     shape = CutCornerShape(10.dp),
                     colors = CardDefaults.cardColors(
                          containerColor = SoftWhite,

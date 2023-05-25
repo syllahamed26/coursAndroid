@@ -1,6 +1,10 @@
 package com.mvince.compose.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -21,7 +25,7 @@ fun ComposeApp() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Route.HOME
+        startDestination = Route.SIGN_IN
     ) {
         composable(Route.SIGN_IN) {
             SignInScreen(navController = navController)

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Jetpack Compose Boilerplate</string>
+    <string name="app_name">Trivial Pursuit</string>
     <string name="please_check_network_connection">Please check your network connection</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

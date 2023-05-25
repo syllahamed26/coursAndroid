@@ -58,11 +58,6 @@ fun SignUpScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceAround,
         ) {
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = ""
-            )
 
             Text(
                 text = stringResource(id = R.string.signup),

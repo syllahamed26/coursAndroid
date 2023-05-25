@@ -51,8 +51,6 @@ fun SignInScreen(navController: NavController) {
 
     val authResource = viewModel.signInFlow.collectAsState().value
 
-    var colorChoice = Green700
-
     val focusManager = LocalFocusManager.current
 
     LaunchedEffect(key1 = authResource, block = {
@@ -71,9 +69,6 @@ fun SignInScreen(navController: NavController) {
             verticalArrangement = Arrangement.SpaceAround,
             //horizontalAlignment = Alignment.Center,
         ) {
-
-            Image(modifier = Modifier.fillMaxWidth(), painter = painterResource(id = R.drawable.ic_launcher_background), contentDescription = "")
-
             Text(
                 text = stringResource(id = R.string.login),
                 style = MaterialTheme.typography.headlineLarge,

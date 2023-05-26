@@ -18,9 +18,9 @@ import com.mvince.compose.ui.home.BottomRoute
 fun NavigationBar(navController: NavController) {
     val bottomNavItems = listOf(
         NavigationBarContent(
-            name = "Home",
-            route = BottomRoute.HOME,
-            icon = painterResource(id = R.drawable.ic_home),
+            name = "Profile",
+            route = BottomRoute.PROFILE,
+            icon = painterResource(id = R.drawable.ic_account),
         ),
         NavigationBarContent(
             name = "Game",
@@ -31,11 +31,6 @@ fun NavigationBar(navController: NavController) {
             name = "Leaderboard",
             route = BottomRoute.LEADERBOARD,
             icon = painterResource(id = R.drawable.ic_leaderboard),
-        ),
-        NavigationBarContent(
-            name = "Profile",
-            route = BottomRoute.PROFILE,
-            icon = painterResource(id = R.drawable.ic_account),
         ),
     )
 

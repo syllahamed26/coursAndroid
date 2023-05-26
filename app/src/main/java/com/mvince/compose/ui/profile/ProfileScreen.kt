@@ -2,42 +2,29 @@ package com.mvince.compose.ui.profile
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.mvince.compose.ui.Route
+import com.mvince.compose.ui.components.IconUser
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "ResourceType")
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen() {
     val viewModel = hiltViewModel<ProfileViewModel>()
 
     val user = viewModel.user.collectAsState().value
-    val isLogout = viewModel.isLogout.collectAsState().value
-
-    LaunchedEffect(key1 = isLogout, block = {
-        if (isLogout) {
-            navController.navigate(Route.SIGN_IN)
-        }
-    })
 
     ElevatedCard(modifier = Modifier
         .fillMaxSize()
@@ -57,26 +44,14 @@ fun ProfileScreen(navController: NavController) {
                 fontWeight = FontWeight.Bold
             )
 
-            Text(text = "Name: ${user?.displayName}",
+            IconUser(id = "id", firstName = "${user?.displayName}",
+                lastName = "${user?.firstname}"
+                , size = 100.dp, fontSize = 50.sp)
+
+            Text(text = user?.displayName + " " + user?.firstname,
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Bold)
 
-            Button(
-
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(45.dp)
-                    .align(Alignment.CenterHorizontally),
-                shape = RoundedCornerShape(30.dp),
-                onClick = {
-                    viewModel.signOut()
-                },
-            ) {
-                Text(
-                    text = "Disconnect",
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
         }
     }
 }

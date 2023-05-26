@@ -1,17 +1,10 @@
-package com.mvince.compose.ui.components
+package com.mvince.compose.ui.components.topbar
 
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -19,14 +12,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.mvince.compose.R
+import com.mvince.compose.ui.Route
+import com.mvince.compose.ui.components.IconUser
 import com.mvince.compose.ui.theme.PrimaryGradiant
-import com.mvince.compose.ui.theme.toHslColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IconMenu(
+fun TopNavigationBar(
+    navController: NavController,
     id: String,
     firstName: String,
     lastName: String,
@@ -34,6 +30,24 @@ fun IconMenu(
     size: Dp = 40.dp,
     textStyle: TextStyle = MaterialTheme.typography.headlineSmall,
 ) {
+
+    val viewModel = hiltViewModel<TopNavigationBarViewModel>()
+
+    var user = viewModel.user.collectAsState().value
+    val isLogout = viewModel.isLogout.collectAsState().value
+
+    LaunchedEffect(key1 = isLogout, block = {
+        if (isLogout) {
+            navController.navigate(Route.SIGN_IN)
+        }
+    })
+
+    LaunchedEffect(key1 = user, block = {
+        if (user != null) {
+            user = user
+        }
+    })
+
 
     var expanded by remember { mutableStateOf(false) }
 
@@ -53,22 +67,17 @@ fun IconMenu(
         actions = {
             Box(){
                 IconButton(onClick = { expanded = true }) {
-                    Box(modifier.size(size), contentAlignment = Alignment.Center) {
-                        val color = remember(id, firstName, lastName) {
-                            val name = listOf(firstName, lastName)
-                                .joinToString(separator = "")
-                                .uppercase()
-                            Color("$id / $name".toHslColor())
-                        }
-                        val initials = (firstName.take(1) + lastName.take(1)).uppercase()
-                        Canvas(modifier = Modifier.fillMaxSize()) {
-                            drawCircle(SolidColor(color))
-                        }
-                        Text(
-                            text = initials,
-                            style = textStyle,
-                            color = Color.White,
-                            fontSize = 15.sp
+                    if (user != null){
+                        IconUser(
+                            id = "id",
+                            firstName = "${user?.displayName?.get(0)}",
+                            lastName = "${user?.firstname?.get(0)}"
+                        )
+                    }else{
+                        IconUser(
+                            id = "id",
+                            firstName = "T",
+                            lastName = "P"
                         )
                     }
                 }
@@ -77,8 +86,8 @@ fun IconMenu(
                     onDismissRequest = { expanded = false }
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Déconnection") },
-                        onClick = { /* Handle edit! */ },
+                        text = { Text("Logout") },
+                        onClick = { viewModel.signOut() },
                         leadingIcon = {
                             Icon(
                                 painterResource(id = R.drawable.ic_login),

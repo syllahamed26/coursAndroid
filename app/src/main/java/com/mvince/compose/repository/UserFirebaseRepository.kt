@@ -6,7 +6,6 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import com.mvince.compose.domain.UserFirebase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -28,11 +27,9 @@ class UserFirebaseRepository @Inject constructor(private val firestore: Firebase
     }
 
     suspend fun getUserById(id: String): UserFirebase? {
-        val data =  firestore.collection(_collection)
+        return firestore.collection(_collection)
             .document(id)
             .get().await().toObject(UserFirebase::class.java)
-        println("data " + data)
-        return data
     }
 
     companion object {

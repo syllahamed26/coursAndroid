@@ -17,8 +17,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import java.time.LocalDateTime
-import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,21 +24,13 @@ class GameViewModel @Inject constructor(
     private val questionRepository: QuestionRepository,
     private val scoreRepository: ScoreFirebaseRepository,
     private val authRepository: AuthRepository,
-    private val userFirebaseRepository: UserFirebaseRepository
+    private val firebaseRepository: UserFirebaseRepository
+
     ): ViewModel() {
 
     private val _currentQuestion = MutableStateFlow<Result?>(null)
     val currentQuestion: StateFlow<Result?>
         get() = _currentQuestion
-
-    private val _user = flow<UserFirebase> {
-        println("authRepository.currentUser?.uid " + authRepository.currentUser?.uid ?: "")
-        val user = userFirebaseRepository.getUserById(authRepository.currentUser?.uid ?: "")
-        emit(user!!)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
-
-    val user: StateFlow<UserFirebase?>
-        get() = _user
 
     private val _currentScore = MutableStateFlow<Double>(0.0)
     val currentScore: StateFlow<Double>
@@ -49,6 +39,14 @@ class GameViewModel @Inject constructor(
     private val _currentIndex = MutableStateFlow<Int>(0)
     val currentIndex : StateFlow<Int>
         get() = _currentIndex
+
+    private val _user = flow<UserFirebase> {
+        val user = firebaseRepository.getUserById(authRepository.currentUser?.uid ?: "")
+        emit(user!!)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
+
+    val user: StateFlow<UserFirebase?>
+        get() = _user
 
     private val _questions = flow<List<Result>> {
         val questions = questionRepository.getQuestions()
@@ -104,7 +102,6 @@ class GameViewModel @Inject constructor(
 
             //Save score to firebase
             if(authRepository.currentUser != null){
-                println(user.value)
                 scoreRepository.insertScore(ScoreFirebase(_currentScore.value, authRepository.currentUser!!.uid, user.value?.displayName, scoreRepository.dateFormat()))
             }
 

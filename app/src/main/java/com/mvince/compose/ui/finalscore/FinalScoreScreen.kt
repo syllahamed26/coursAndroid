@@ -13,12 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mvince.compose.R
 import com.mvince.compose.ui.Route
+import com.mvince.compose.ui.home.BottomRoute
 import com.mvince.compose.ui.theme.*
 
 @SuppressLint("StateFlowValueCalledInComposition", "UnusedMaterial3ScaffoldPaddingParameter")
@@ -47,11 +49,12 @@ fun FinalScoreScreen(navController: NavController, textDisplay: String? = null) 
             Text(
                 text = textDisplay ?: "End of the game",
                 fontSize = 30.sp, fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                textAlign = TextAlign.Center
             )
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "Your score : \n",
+                    text = "Your score \n",
                     style = MaterialTheme.typography.titleMedium,
                     fontSize = 25.sp,
                     color = GreyLight,
@@ -73,7 +76,7 @@ fun FinalScoreScreen(navController: NavController, textDisplay: String? = null) 
                     .height(45.dp),
                 shape = RoundedCornerShape(30.dp),
                 onClick = {
-                    navController.navigate(Route.HOME)
+                    navController.navigate(BottomRoute.PROFILE)
                 },
             ) {
                 Text(

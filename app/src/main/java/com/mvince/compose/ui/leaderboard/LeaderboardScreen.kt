@@ -33,6 +33,9 @@ fun LeaderboardScreen() {
 
     val scores = viewModel.scores.collectAsState().value
 
+    //get element with max score, get one if there are multiple
+    val maxScore = scores.maxByOrNull { it.score }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             //modifier = Modifier.padding(it),
@@ -44,7 +47,7 @@ fun LeaderboardScreen() {
                     .padding(horizontal = 30.dp, vertical = 70.dp),
                 shape = RoundedCornerShape(30.dp)
             ) {
-                Column(modifier = Modifier.padding(horizontal = 40.dp, vertical = 20.dp)) {
+                Column(modifier = Modifier.padding(horizontal = 40.dp, vertical = 10.dp)) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -81,15 +84,7 @@ fun LeaderboardScreen() {
                     {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
-                                text = "Antoine",
-                                style = MaterialTheme.typography.titleMedium,
-                                fontSize = 20.sp,
-                                color = Color.Black,
-                                fontWeight = FontWeight.Bold
-                            )
-
-                            Text(
-                                text = "Andre",
+                                text = "${maxScore?.name}",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontSize = 20.sp,
                                 color = Color.Black,
@@ -115,7 +110,7 @@ fun LeaderboardScreen() {
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "30",
+                                text = "${maxScore?.score}",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontSize = 25.sp,
                                 color = Color.Black,
@@ -126,15 +121,16 @@ fun LeaderboardScreen() {
                 }
             }
 
-            scores.forEachIndexed { index, score ->
+            for ((index, score) in scores.withIndex()) {
+                if (index == 0) continue
                 ElevatedCard(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 30.dp, vertical = 0.dp),
-                    shape = CutCornerShape(10.dp),
+                        .padding(start = 30.dp, end = 30.dp, bottom = 10.dp),
+                    shape = RoundedCornerShape(10.dp),
                     colors = CardDefaults.cardColors(
-                         containerColor = SoftWhite,
-                     ),
+                        containerColor = SoftWhite,
+                    ),
                 ) {
                     Row(
                         modifier = Modifier

@@ -31,7 +31,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     private val _user = flow<UserFirebase> {
-        firebaseRepository.getUserById(repository.currentUser?.uid ?: "")
+        val user = firebaseRepository.getUserById(repository.currentUser?.uid ?: "")
+        emit(user!!)
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     val user: StateFlow<UserFirebase?>

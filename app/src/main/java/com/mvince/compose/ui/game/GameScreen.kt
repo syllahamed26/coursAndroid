@@ -37,6 +37,7 @@ fun GameScreen(navController: NavController){
     val currentScore = viewModel.currentScore.collectAsState().value
     val finalQuestion = viewModel.finalScreen.collectAsState().value
     val isAlreadyPLaying = viewModel.isAlreadyPlaying.collectAsState().value
+    val user = viewModel.user.collectAsState().value
 
     LaunchedEffect(key1 = finalQuestion, block = {
         if(finalQuestion){
